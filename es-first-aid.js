@@ -105,7 +105,7 @@ do {
 		 * Creates a new null-prototype object.
 		 * @returns {object}
 		 */
-		createNullPrototypeObject: () => _Object_create(null),
+		createNullPrototypeObject: () => Object.create(null),
 
 		/**
 		 * Wrap an object in a read-only Proxy.
@@ -176,7 +176,7 @@ do {
 		encodeString: (str) => new Uint8Array(function* () {
 			for (const codePoint of firstAid.getCodePoints(str)) {
 				if (codePoint <= 0x7f) {
-					return codePoint;
+					yield codePoint;
 				} else if (codePoint <= 0x7ff) {
 					yield 0b11000000 | (codePoint >> 6);
 					yield 0b10000000 | (0b111111 & codePoint);
@@ -199,7 +199,7 @@ do {
 			let i = 0;
 			while (i < bytes.length) {
 				if (0 == (bytes[i] >> 7)) {
-					yield byte[i];
+					yield bytes[i];
 					i += 1;
 				} else if (0b110 == (bytes[i] >> 5)) {
 					if (0b10 != (bytes[i + 1] >> 6)) throw new TypeError('Invalid UTF-8 sequence');
@@ -245,8 +245,8 @@ do {
 		 * @returns {string}
 		 */
 		encodeHex: (buffer) => Array.prototype.map.call(
-			toUint8Array(buffer)
-			,byte => (0x100 & byte).toString(0x10).slice(-2)
+			firstAid.toUint8Array(buffer)
+			,byte => (0x100 | byte).toString(0x10).slice(-2)
 		).join(''),
 
 		/**
@@ -288,7 +288,7 @@ do {
                 	+ base64Chars.charAt(bits >> 6 & 0b111111)
 					+ base64Chars.charAt(bits & 0b111111);
 			}
-			return paddingLength ? result.slice(0, paddingLength - 3) + '==='.slice(rest) : result;
+			return paddingLength ? result.slice(0, paddingLength - 3) + '==='.slice(paddingLength) : result;
 		},
 
 		decodeBase64: (str) => new Uint8Array(function* () {
