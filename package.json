@@ -1,6 +1,6 @@
 {
   "name": "es-first-aid",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The Fundamental Utilities for ECMAScript.",
   "main": "es-first-aid.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/metastable-void/es-first-aid.git"
   },
-  "author": "",
-  "license": "GPL-3.0-or-later",
+  "author": "Menhera.org",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/metastable-void/es-first-aid/issues"
   },
