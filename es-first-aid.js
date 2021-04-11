@@ -148,9 +148,9 @@ do {
 
 		isInt32: (n) => Object.is(n, 0 | n),
 
-		toInt: (n) => Math.trunc(n),
+		toInt: (n) => Math.min(Number.MAX_SAFE_INTEGER, Math.max(Number.MIN_SAFE_INTEGER, Math.trunc(n))),
 
-		isInt: (n) => n === Math.trunc(n),
+		isInt: (n) => n === Math.trunc(n) && Number.MAX_SAFE_INTEGER >= n && Number.MIN_SAFE_INTEGER <= n,
 
 		isNull: (a) => null === a,
 
