@@ -404,6 +404,14 @@ do {
 		validateUuid: (uuid) => !!String(uuid).match(
 			/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 		),
+
+		callAsync: (callback, thisArg, ... args) => Promise.resolve().then(
+			() => Reflect.apply(callback, thisArg || null, args)
+		),
+
+		toPromise: async (value) => await value,
+
+		getTime: () => +new Date,
 	};
 
 	/* Module finalization */

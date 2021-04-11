@@ -17,8 +17,8 @@ The Fundamental Utilities for ECMAScript.
 globalThis.firstAid
 ```
 
-### firstAid.TypedArray
-TypedArray constructor. : function
+### firstAid.TypedArray : function
+TypedArray constructor.
 
 ### firstAid.MINUS_ZERO : number
 `-0`
@@ -29,64 +29,64 @@ Creates a new null-prototype object.
 ### firstAid.createReadOnlyProxy<T> : (T) => Proxy<T>
 Wraps an object in a read-only Proxy.
 
-### firstAid.isRevokedProxy : (*) => boolean
+### firstAid.isRevokedProxy : (value: any) => boolean
 Returns true if the passed object is a revoked Proxy.
 
-### firstAid.isConstructor : (function) => boolean
+### firstAid.isConstructor : (value: any) => boolean
 Returns true if the passed object has a valid `[[Construct]]` slot.
 
-### firstAid.toInt32 : (*) => number
+### firstAid.toInt32 : (value: any) => number
 Converts a value into a 32-bit signed integer.
 
-### firstAid.isInt32 : (*) => boolean
+### firstAid.isInt32 : (value: any) => boolean
 Returns true if the passed value is a 32-bit signed integer.
 
-### firstAid.toInt : (*) => number
+### firstAid.toInt : (value: any) => number
 Tries to convert a value into an integer.
 
-### firstAid.isInt : (*) => boolean
+### firstAid.isInt : (value: any) => boolean
 Returns true if the passed value is a valid safe integer in ECMAScript.
 
-### firstAid.isNull : (*) => boolean
+### firstAid.isNull : (value: any) => boolean
 Returns true if the passed value is `null`.
 
-### firstAid.isObject : (*) => boolean
+### firstAid.isObject : (value: any) => boolean
 Returns true if the passed value is an object. (This includes functions but not `null`.)
 
-### firstAid.isPropertyKey : (*) => boolean
+### firstAid.isPropertyKey : (value: any) => boolean
 Returns true if the passed value is a valid property key (`string` or `symbol`).
 
-### firstAid.getCodePoints : (string) => Iterator<number>
+### firstAid.getCodePoints : (str: string) => Iterator<number>
 Returns Unicode code points of the given string.
 
-### firstAid.encodeString : (string) => Uint8Array
+### firstAid.encodeString : (str: string) => Uint8Array
 Encodes a string into UTF-8 bytes.
 
-### firstAid.decodeString : (BufferSource) => string
+### firstAid.decodeString : (utf8Bytes: BufferSource) => string
 Decodes a string from UTF-8 bytes.
 
-### firstAid.toUint8Array : (BufferSource) => Uint8Array
+### firstAid.toUint8Array : (buffer: BufferSource) => Uint8Array
 Converts a buffer or view into a Uint8Array.
 
-### firstAid.encodeHex : (BufferSource) => string
+### firstAid.encodeHex : (buffer: BufferSource) => string
 Encodes bytes into a hex string.
 
-### firstAid.decodeHex : (string) => Uint8Array
+### firstAid.decodeHex : (hexString: string) => Uint8Array
 Decodes a hex string.
 
-### firstAid.encodeBase64 : (BufferSource) => string
+### firstAid.encodeBase64 : (buffer: BufferSource) => string
 Encodes bytes into Base-64 encoded string.
 
-### firstAid.decodeBase64 : (string) => Uint8Array
+### firstAid.decodeBase64 : (base64String: string) => Uint8Array
 Decodes a Base-64 encoded string.
 
-### firstAid.crc32 : (BufferSource) => number
+### firstAid.crc32 : (buffer: BufferSource) => number
 Calculates a CRC-32 check sum of the given buffer. (Signed 32-bit integer)
 
-### firstAid.randomFillInsecure : (BuffferSource) => Uint8Array
+### firstAid.randomFillInsecure : (buffer: BuffferSource) => Uint8Array
 Fills the given buffer with Math.random() values.
 
-### firstAid.randomFill : (BufferSource) => Uint8Array
+### firstAid.randomFill : (buffer: BufferSource) => Uint8Array
 Fills the given buffer with secure random values.
 
 Currently, Node.JS, Web, and Deno is supported.
@@ -115,6 +115,14 @@ Generates a random version-4 UUID string.
 ### firstAid.validateUuid : (uuid: string) => boolean
 Returns true if the given value is a valid UUID string.
 
+### firstAid.callAsync : (callback: function, thisArgument: any, ... argumentList: any[]) => Promise<any>
+Calls the given function in an asynchronous manner.
+
+### firstAid.toPromise : (value: any) => Promise<any>
+Converts any value into a Promise.
+
+### firstAid.getTime: () => number
+Returns a current Unix timestamp in milliseconds.
 
 ## License
 Copyright &copy; 2021 Menhera.org
