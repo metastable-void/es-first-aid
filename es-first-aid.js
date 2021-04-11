@@ -99,6 +99,8 @@ do {
 
 		TypedArray: TypedArray,
 
+		isTypedArray: (value) => value instanceof firstAid.TypedArray,
+
 		MINUS_ZERO: -0,
 
 		/**

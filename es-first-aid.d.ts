@@ -1,22 +1,3 @@
-# es-first-aid
-The Fundamental Utilities for ECMAScript.
-
-- Missing utility functions for ECMAScript
-- Random numbers/bytes...
-- UUIDs
-- CRC-32
-- Most basic general utility classes for various applications
-- Base64 encode/decode
-- UTF-8 string encode/decode
-- Hex string encode/decode
-- ...
-
-## API
-
-```typescript
-globalThis.firstAid;
-
-// where
 
 declare namespace firstAid {
     interface Iterable<T> {
@@ -140,9 +121,3 @@ declare namespace firstAid {
     // Returns a current Unix timestamp in milliseconds.
     const getTime: () => number;
 }
-```
-
-## License
-Copyright &copy; 2021 Menhera.org
-
-Licensed under the Apache 2.0 license.
