@@ -60,6 +60,9 @@ declare namespace firstAid {
     // Converts a buffer or view into a Uint8Array.
     const toUint8Array: (buffer: BufferSource) => Uint8Array;
 
+    // Get a copied ArrayBuffer from BufferSource.
+    const getCopyBuffer: (buffer: BufferSource) => ArrayBuffer;
+
     // Encodes bytes into a hex string.
     const encodeHex: (buffer: BufferSource) => string;
 
