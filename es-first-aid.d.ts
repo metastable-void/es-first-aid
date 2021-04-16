@@ -10,7 +10,7 @@ declare namespace firstAid {
     const TypedArray: Function;
 
     // Returns true if the passed value is a TypedArray.
-    const isTypedArray: (value) => boolean;
+    const isTypedArray: (value: any) => boolean;
 
     // -0.
     const MINUS_ZERO: number;
@@ -120,4 +120,10 @@ declare namespace firstAid {
 
     // Returns a current Unix timestamp in milliseconds.
     const getTime: () => number;
+
+    // Encodes an object into JSON bytes.
+    const encodeJson: (value: any) => Uint8Array;
+
+    // Decodes an object from JSON bytes.
+    const decodeJson: (bytes: BufferSource) => any;
 }

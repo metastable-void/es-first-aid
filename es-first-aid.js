@@ -414,6 +414,10 @@ do {
 		toPromise: async (value) => await value,
 
 		getTime: () => +new Date,
+
+		encodeJson: (obj) => firstAid.encodeString(JSON.stringify(obj)),
+
+		decodeJson: (bytes) => JSON.parse(firstAid.decodeString(bytes)),
 	};
 
 	/* Module finalization */
