@@ -1,11 +1,11 @@
 {
   "name": "es-first-aid",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "The Fundamental Utilities for ECMAScript.",
   "main": "es-first-aid.js",
   "types": "es-first-aid.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
