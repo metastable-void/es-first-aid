@@ -227,6 +227,18 @@ do {
 			setPrototypeOf: () => false,
 		}),
 
+		checkForError: (f) => {
+			if ('function' != typeof f) {
+				throw new TypeError('Not a function');
+			}
+			try {
+				f();
+				return false;
+			} catch (e) {
+				return true;
+			}
+		},
+
 		/**
 		 * Check if a value is a revoked Proxy.
 		 * @param {*} a 
@@ -235,6 +247,13 @@ do {
 		isRevokedProxy: (a) => {
 			try {
 				new Proxy(a, {});
+
+				try {
+					a[Symbol()];
+				} catch (e) {
+					Reflect.getPrototypeOf(a);
+				}
+				
 				return false;
 			} catch (e) {
 				return ('function' == typeof a || a && 'object' == typeof a);
@@ -436,6 +455,12 @@ do {
 				crc = (crc >>> 8) ^ CRC32_TABLE[0xff & (crc ^ p[i])];
 			}
 			return crc ^ -1;
+		},
+
+		crc32Bytes: (buffer) => {
+			const view = new DataView(new ArrayBuffer(4));
+			view.setInt32(0, firstAid.crc32(buffer), false);
+			return firstAid.toUint8Array(view);
 		},
 
 		randomFillInsecure: (buffer) => {

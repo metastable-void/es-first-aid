@@ -17,141 +17,171 @@ The Fundamental Utilities for ECMAScript.
 globalThis.firstAid;
 
 // where
+declare const firstAid: FirstAid;
 
-declare namespace firstAid {
-    interface Iterable<T> {
-        [Symbol.iterator](): Iterator<T>;
-    }
+interface Iterable<T> {
+    [Symbol.iterator](): Iterator<T>;
+}
 
-    type BufferSource = ArrayBuffer | ArrayBufferView;
+type BufferSource = ArrayBuffer | ArrayBufferView;
+
+type MaybePromise<T> = Promise<T> | T;
+
+interface PromiseComposition<T> extends Promise<Iterable<T>> {
+    promises: Promise<T>[];
+    [Symbol.iterator]: () => IterableIterator<T>;
+    results: () => Promise<T[]>;
+    rejections: () => Promise<any[]>;
+    fulfilled: <returnType>(callback: (result: T) => returnType) => PromiseComposition<returnType>;
+    rejected: <returnType>(callback: (reason: any) => returnType) => PromiseComposition<returnType>;
+}
+
+interface FirstAid {
+    VERSION: string;
+
+    firstAid: FirstAid;
+
+    constructor: new () => FirstAid;
+
+    PromiseComposition: new <T>(... promises: MaybePromise<T>[]) => PromiseComposition<T>;
 
     // TypedArray constructor. (This is abstract; you cannot instantiate this.)
-    const TypedArray: Function;
+    TypedArray: Function;
 
     // Returns true if the passed value is a TypedArray.
-    const isTypedArray: (value: any) => boolean;
+    isTypedArray: (value: any) => boolean;
 
     // -0.
-    const MINUS_ZERO: number;
+    MINUS_ZERO: number;
 
     // Creates a new null-prototype object.
-    const createNullPrototypeObject: () => {};
+    createNullPrototypeObject: () => {};
 
     // Wraps an object in a read-only Proxy.
-    const createReadOnlyProxy: <T>(obj: T) => T;
+    createReadOnlyProxy: <T>(obj: T) => T;
+
+    // Returns true if the function throws.
+    checkForError: (f: () => void) => boolean;
 
     // Returns true if the passed object is a revoked Proxy.
-    const isRevokedProxy: (value: any) => boolean;
+    // This function is no longer always-reliable due to changes made to ECMAScript specs.
+    isRevokedProxy: (value: any) => boolean;
 
     // Returns true if the passed object has a valid [[Construct]] slot.
-    const isConstructor: (value: any) => boolean;
+    isConstructor: (value: any) => boolean;
 
     // Converts a value into a 32-bit signed integer.
-    const toInt32: (value: any) => number;
+    toInt32: (value: any) => number;
 
     // Returns true if the passed value is a 32-bit signed integer.
-    const isInt32: (value: any) => boolean;
+    isInt32: (value: any) => boolean;
 
     // Tries to convert a value into an integer.
-    const toInt: (value: any) => number;
+    toInt: (value: any) => number;
 
     // Returns true if the passed value is a valid safe integer in ECMAScript.
-    const isInt: (value: any) => boolean;
+    isInt: (value: any) => boolean;
 
     // Returns true if the passed value is null.
-    const isNull: (value: any) => boolean;
+    isNull: (value: any) => boolean;
 
     // Returns true if the passed value is an object. (This includes functions but not null.)
-    const isObject: (value: any) => boolean;
+    isObject: (value: any) => boolean;
 
     // Returns true if the passed value is a valid property key (string or symbol).
-    const isPropertyKey: (value: any) => boolean;
+    isPropertyKey: (value: any) => boolean;
 
     // Returns Unicode code points of the given string.
-    const getCodePoints: (str: string) => Iterable<number>;
+    getCodePoints: (str: string) => Iterable<number>;
 
     // Encodes a string into UTF-8 bytes.
-    const encodeString: (str: string) => Uint8Array;
+    encodeString: (str: string) => Uint8Array;
 
     // Decodes a string from UTF-8 bytes.
-    const decodeString: (utf8Bytes: BufferSource) => string;
+    decodeString: (utf8Bytes: BufferSource) => string;
 
     // Converts a buffer or view into a Uint8Array.
-    const toUint8Array: (buffer: BufferSource) => Uint8Array;
+    toUint8Array: (buffer: BufferSource) => Uint8Array;
 
     // Get a copied ArrayBuffer from BufferSource.
-    const getCopyBuffer: (buffer: BufferSource) => ArrayBuffer;
+    getCopyBuffer: (buffer: BufferSource) => ArrayBuffer;
 
     // Encodes bytes into a hex string.
-    const encodeHex: (buffer: BufferSource) => string;
+    encodeHex: (buffer: BufferSource) => string;
 
     // Decodes a hex string.
-    const decodeHex: (hexString: string) => Uint8Array;
+    decodeHex: (hexString: string) => Uint8Array;
 
     // Encodes bytes into Base-64 encoded string.
-    const encodeBase64: (buffer: BufferSource) => string;
+    encodeBase64: (buffer: BufferSource) => string;
 
     // Decodes a Base-64 encoded string.
-    const decodeBase64: (base64String: string) => Uint8Array;
+    decodeBase64: (base64String: string) => Uint8Array;
 
     // Calculates a CRC-32 check sum of the given buffer. (Signed 32-bit integer)
-    const crc32: (buffer: BufferSource) => number;
+    crc32: (buffer: BufferSource) => number;
+
+    // Get the CRC-32 sum as a Uint8Array.
+    crc32Bytes: (buffer: BufferSource) => Uint8Array;
 
     // Fills the given buffer with Math.random() values.
-    const randomFillInsecure: (buffer: BufferSource) => Uint8Array;
+    randomFillInsecure: (buffer: BufferSource) => Uint8Array;
 
     // Fills the given buffer with secure random values.
     // Currently, Node.JS, Web, and Deno is supported.
-    const randomFill: (buffer: BufferSource) => Uint8Array;
+    randomFill: (buffer: BufferSource) => Uint8Array;
 
     // Returns a random number in [0, 1) range.
     // Uses Math.random() if isInsecure is true.
-    const random: (isInsecure?: boolean) => number;
+    random: (isInsecure?: boolean) => number;
 
     // Returns a random number in (0, 1] range.
     // Uses Math.random() if isInsecure is true.
-    const randomNonZero: (isInsecure?: boolean) => number;
+    randomNonZero: (isInsecure?: boolean) => number;
 
     // Returns a standard normal random number.
     // Uses Math.random() if isInsecure is true.
-    const randomNormal: (isInsecure?: boolean) => number;
+    randomNormal: (isInsecure?: boolean) => number;
 
     // Returns a standard exponential random number.
     // Uses Math.random() if isInsecure is true.
-    const randomExponential: (isInsecure?: boolean) => number;
+    randomExponential: (isInsecure?: boolean) => number;
 
     // Returns a Xenakis random number.
     // Uses Math.random() if isInsecure is true.
-    const randomXenakis: (isInsecure?: boolean) => number;
+    randomXenakis: (isInsecure?: boolean) => number;
 
     // Returns true in the given probability.
     // Uses Math.random() if isInsecure is true.
-    const randomProb: (prob: number, isInsecure?: boolean) => boolean;
+    randomProb: (prob: number, isInsecure?: boolean) => boolean;
 
     // Generates a version-4 UUID string from the given buffer.
-    const getUuidFromBytes: (arr: BufferSource) => string;
+    getUuidFromBytes: (arr: BufferSource) => string;
 
     // Generates a random version-4 UUID string.
     // Uses Math.random() if isInsecure is true.
-    const getRandomUuid: (isInsecure?: boolean) => string;
+    getRandomUuid: (isInsecure?: boolean) => string;
 
     // Returns true if the given value is a valid UUID string.
-    const validateUuid: (uuid: string) => boolean;
+    validateUuid: (uuid: string) => boolean;
 
     // Calls the given function in an asynchronous manner.
-    const callAsync: <T>(callback: (... argumentsList: any[]) => T, thisArgument: any, ... argumentList: any[]) => Promise<T>;
+    callAsync: <argumentType, returnType>(callback: (... argumentsList: argumentType[]) => returnType, thisArgument: any, ... argumentList: argumentType[]) => Promise<returnType>;
 
     // Converts any value into a Promise.
-    const toPromise: <T>(value: T | Promise<T>) => Promise<T>;
+    toPromise: <T>(value: MaybePromise<T>) => Promise<T>;
 
     // Returns a current Unix timestamp in milliseconds.
-    const getTime: () => number;
+    getTime: () => number;
 
     // Encodes an object into JSON bytes.
-    const encodeJson: (value: any) => Uint8Array;
+    encodeJson: (value: any) => Uint8Array;
 
     // Decodes an object from JSON bytes.
-    const decodeJson: (bytes: BufferSource) => any;
+    decodeJson: (bytes: BufferSource) => any;
+
+    // Throws an error if assertion is false
+    assert: (assertion: boolean, message?: string) => void;
 }
 ```
 

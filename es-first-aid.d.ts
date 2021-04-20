@@ -40,7 +40,11 @@ interface FirstAid {
     // Wraps an object in a read-only Proxy.
     createReadOnlyProxy: <T>(obj: T) => T;
 
+    // Returns true if the function throws.
+    checkForError: (f: () => void) => boolean;
+
     // Returns true if the passed object is a revoked Proxy.
+    // This function is no longer always-reliable due to changes made to ECMAScript specs.
     isRevokedProxy: (value: any) => boolean;
 
     // Returns true if the passed object has a valid [[Construct]] slot.
@@ -96,6 +100,9 @@ interface FirstAid {
 
     // Calculates a CRC-32 check sum of the given buffer. (Signed 32-bit integer)
     crc32: (buffer: BufferSource) => number;
+
+    // Get the CRC-32 sum as a Uint8Array.
+    crc32Bytes: (buffer: BufferSource) => Uint8Array;
 
     // Fills the given buffer with Math.random() values.
     randomFillInsecure: (buffer: BufferSource) => Uint8Array;
