@@ -146,7 +146,7 @@ interface FirstAid {
     validateUuid: (uuid: string) => boolean;
 
     // Calls the given function in an asynchronous manner.
-    callAsync: <argumentType, returnType>(callback: (... argumentsList: argumentType[]) => returnType, thisArgument: any, ... argumentList: argumentType[]) => Promise<returnType>;
+    callAsync: <argumentType, returnType>(callback: (... argumentsList: argumentType[]) => MaybePromise<returnType>, thisArgument: any, ... argumentList: argumentType[]) => Promise<returnType>;
 
     // Converts any value into a Promise.
     toPromise: <T>(value: MaybePromise<T>) => Promise<T>;
