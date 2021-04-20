@@ -371,10 +371,7 @@ do {
 				// This loop should execute only once since we are using (1 - [random number in [0, 1)]).
 				a = 1 - firstAid.random(isInsecure);
 			} while (a === 0);
-			do {
-				// This loop should execute only once since we are using (1 - [random number in [0, 1)]).
-				b = 1 - firstAid.random(isInsecure);
-			} while (b === 0);
+			b = firstAid.random(isInsecure);
 			return Math.sqrt(-2 * Math.log(a)) * Math.sin(2 * Math.PI * b);
 		},
 
