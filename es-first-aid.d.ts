@@ -89,6 +89,10 @@ declare namespace firstAid {
     // Uses Math.random() if isInsecure is true.
     const random: (isInsecure?: boolean) => number;
 
+    // Returns a random number in (0, 1] range.
+    // Uses Math.random() if isInsecure is true.
+    const randomNonZero: (isInsecure?: boolean) => number;
+
     // Returns a standard normal random number.
     // Uses Math.random() if isInsecure is true.
     const randomNormal: (isInsecure?: boolean) => number;

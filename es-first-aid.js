@@ -364,18 +364,23 @@ do {
 			return (new DataView(buffer)).getFloat64(0, false) - 1;
 		},
 
-		randomNormal: (isInsecure) => {
-			let a, b;
-			// Random number in (0, 1].
+		// Random number in (0, 1].
+		randomNonZero: (isInsecure) => {
+			let a;
 			do {
 				// This loop should execute only once since we are using (1 - [random number in [0, 1)]).
 				a = 1 - firstAid.random(isInsecure);
 			} while (a === 0);
-			b = firstAid.random(isInsecure);
+			return a;
+		},
+
+		randomNormal: (isInsecure) => {
+			const a = firstAid.randomNonZero(isInsecure);
+			const b = firstAid.random(isInsecure);
 			return Math.sqrt(-2 * Math.log(a)) * Math.sin(2 * Math.PI * b);
 		},
 
-		randomExponential: (isInsecure) => -Math.log(1 - firstAid.random(isInsecure)),
+		randomExponential: (isInsecure) => -Math.log(firstAid.randomNonZero(isInsecure)),
 
 		randomXenakis: (isInsecure) => 1 - Math.sqrt(firstAid.random(isInsecure)),
 
