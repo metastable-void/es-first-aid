@@ -366,11 +366,14 @@ do {
 
 		randomNormal: (isInsecure) => {
 			let a, b;
+			// Random number in (0, 1].
 			do {
-				a = firstAid.random(isInsecure);
+				// This loop should execute only once since we are using (1 - [random number in [0, 1)]).
+				a = 1 - firstAid.random(isInsecure);
 			} while (a === 0);
 			do {
-				b = firstAid.random(isInsecure);
+				// This loop should execute only once since we are using (1 - [random number in [0, 1)]).
+				b = 1 - firstAid.random(isInsecure);
 			} while (b === 0);
 			return Math.sqrt(-2 * Math.log(a)) * Math.sin(2 * Math.PI * b);
 		},
