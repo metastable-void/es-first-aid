@@ -587,6 +587,9 @@ do {
 				if (!new.target) {
 					return new SymbolObject(symbol);
 				}
+				if (symbol instanceof SymbolObject) {
+					return symbol;
+				}
 				if ('symbol' != typeof symbol) {
 					throw new TypeError('Not a Symbol');
 				}

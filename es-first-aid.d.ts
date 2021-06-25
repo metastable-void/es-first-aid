@@ -171,7 +171,7 @@ interface FirstAid {
     IdentityConstructor: new <T>(obj: T) => T;
 
     // Creates an object for a symbol.
-    SymbolObject: new (symbol: symbol) => SymbolObject;
+    SymbolObject: new (symbol: symbol | SymbolObject) => SymbolObject;
 }
 
 declare const firstAid: FirstAid;
