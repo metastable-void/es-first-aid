@@ -16,6 +16,10 @@ interface PromiseComposition<T> extends Promise<Iterable<T>> {
     rejected: <returnType>(callback: (reason: any) => returnType) => PromiseComposition<returnType>;
 }
 
+interface SymbolObject {
+    symbol: symbol;
+}
+
 interface FirstAid {
     VERSION: string;
 
@@ -162,6 +166,12 @@ interface FirstAid {
 
     // Throws an error if assertion is false
     assert: (assertion: boolean, message?: string) => void;
+
+    // Returns the passed object as a constructor.
+    IdentityConstructor: new <T>(obj: T) => T;
+
+    // Creates an object for a symbol.
+    SymbolObject: new (symbol: symbol) => SymbolObject;
 }
 
 declare const firstAid: FirstAid;

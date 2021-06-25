@@ -570,6 +570,38 @@ do {
 				throw error;
 			}
 		},
+
+		IdentityConstructor: function IdentityConstructor(obj) {
+			if (!new.target) {
+				return new IdentityConstructor(obj);
+			}
+			if (!firstAid.isObject(obj)) {
+				throw new TypeError('Not an object');
+			}
+			return obj;
+		},
+
+		SymbolObject: function () {
+			const objects = firstAid.createNullPrototypeObject();
+			const constructor = function SymbolObject(symbol) {
+				if (!new.target) {
+					return new SymbolObject(symbol);
+				}
+				if ('symbol' != typeof symbol) {
+					throw new TypeError('Not a Symbol');
+				}
+				if (objects[symbol]) {
+					return objects[symbol];
+				}
+				const obj = Object.create(SymbolObject.prototype);
+				Reflect.defineProperty(obj, 'symbol', {value: symbol});
+				objects[symbol] = obj;
+				return obj;
+			};
+			constructor[Symbol.hasInstance] = (obj) => firstAid.isObject(obj)
+				&& 'symbol' == typeof obj.symbol && objects[obj.symbol] == obj;
+			return constructor;
+		}(),
 	};
 
 	/* Module finalization */
