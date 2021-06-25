@@ -36,6 +36,10 @@ interface PromiseComposition<T> extends Promise<Iterable<T>> {
     rejected: <returnType>(callback: (reason: any) => returnType) => PromiseComposition<returnType>;
 }
 
+interface SymbolObject {
+    symbol: symbol;
+}
+
 interface FirstAid {
     VERSION: string;
 
