@@ -1,6 +1,6 @@
 {
   "name": "es-first-aid",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "The Fundamental Utilities for ECMAScript.",
   "main": "es-first-aid.js",
   "types": "es-first-aid.d.ts",

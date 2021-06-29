@@ -582,7 +582,7 @@ do {
 		},
 
 		SymbolObject: function () {
-			const objects = firstAid.createNullPrototypeObject();
+			const objects = Object.create(null);
 			const constructor = function SymbolObject(symbol) {
 				if (!new.target) {
 					return new SymbolObject(symbol);
