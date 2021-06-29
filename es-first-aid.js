@@ -601,7 +601,7 @@ do {
 				objects[symbol] = obj;
 				return obj;
 			};
-			Reflect.define(constructor, Symbol.hasInstance, {value: ((obj) => firstAid.isObject(obj)
+			Reflect.defineProperty(constructor, Symbol.hasInstance, {value: ((obj) => firstAid.isObject(obj)
 				&& 'symbol' == typeof obj.symbol && objects[obj.symbol] == obj)});
 			return constructor;
 		}(),
