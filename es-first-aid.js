@@ -601,6 +601,7 @@ do {
 				objects[symbol] = obj;
 				return obj;
 			};
+			delete constructor[Symbol.hasInstance];
 			constructor[Symbol.hasInstance] = (obj) => firstAid.isObject(obj)
 				&& 'symbol' == typeof obj.symbol && objects[obj.symbol] == obj;
 			return constructor;
