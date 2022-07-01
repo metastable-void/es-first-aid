@@ -167,6 +167,9 @@ interface FirstAid {
     // Throws an error if assertion is false
     assert: (assertion: boolean, message?: string) => void;
 
+    // Compare two values in a JSON-like manner
+    compareJson: (a: any, b: any) => boolean;
+
     // Returns the passed object as a constructor.
     IdentityConstructor: new <T>(obj: T) => T;
 

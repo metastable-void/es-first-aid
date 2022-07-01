@@ -571,6 +571,94 @@ do {
 			}
 		},
 
+		compareJson: (a, b) => {
+			function equals(a, b, aVisitedA, aVisitedB) {
+				if (null !== a && 'object' == typeof a && !('toJSON' in a)) {
+					try {
+						const json = JSON.stringify(a);
+						const value = JSON.parse(json);
+						if ('object' != typeof value) {
+							return equals(value, b, aVisitedA, aVisitedB);
+						}
+					} catch (e) {}
+				}
+				if (null !== b && 'object' == typeof b && !('toJSON' in b)) {
+					try {
+						const json = JSON.stringify(b);
+						const value = JSON.parse(json);
+						if ('object' != typeof value) {
+							return equals(a, value, aVisitedA, aVisitedB);
+						}
+					} catch (e) {}
+				}
+				if (typeof a != typeof b) {
+					return false;
+				} else if ('number' == typeof a) {
+					return Object.is(a, b);
+				} else if (a === b) {
+					return true;
+				} else if (null === a || null === b || 'object' != typeof a) {
+					return false;
+				}
+				const visitedA = Array.isArray(aVisitedA) ? aVisitedA : [];
+				const visitedB = Array.isArray(aVisitedB) ? aVisitedB : [];
+				if (visitedA.includes(a) || visitedB.includes(b)) {
+					if (visitedA.indexOf(a) == visitedB.indexOf(b)) {
+						return true;
+					}
+					return false;
+				}
+				visitedA.push(a);
+				visitedB.push(b);
+				let result = false;
+				objectComaprison: {
+					if (Array.isArray(a)) {
+						if (!Array.isArray(b)) {
+							result = false;
+							break objectComaprison;
+						}
+						if (a.length != b.length) {
+							result = false;
+							break objectComaprison;
+						}
+						for (let i = 0; i < a.length; i++) {
+							if (!equals(a[i], b[i], visitedA, visitedB)) {
+								result = false;
+								break objectComaprison;
+							}
+						}
+						result = true;
+						break objectComaprison;
+					} else {
+						const a_props = Object.getOwnPropertyNames(a).sort();
+						const b_props = Object.getOwnPropertyNames(b).sort();
+						if (a_props.length != b_props.length) {
+							result = false;
+							break objectComaprison;
+						}
+						for (let i = 0; i < a_props.length; i++) {
+							const a_prop = a_props[i];
+							const b_prop = b_props[i];
+							if (a_prop != b_prop) {
+								result = false;
+								break objectComaprison;
+							}
+							if (!equals(a[a_prop], b[b_prop], visitedA, visitedB)) {
+								result = false;
+								break objectComaprison;
+							}
+						}
+						result = true;
+						break objectComaprison;
+					}
+				}
+				visitedA.pop();
+				visitedB.pop();
+				return result;
+			}
+			return equals(a, b);
+		},
+
 		IdentityConstructor: function IdentityConstructor(obj) {
 			if (!new.target) {
 				return new IdentityConstructor(obj);
